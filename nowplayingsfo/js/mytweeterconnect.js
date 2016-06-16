@@ -1,5 +1,6 @@
+//http://191.109.247.195:80/nowplayingsfo/
 //var phpServerUrl = "http://192.168.1.36:80/twitterconnect/s00/php/";
-var phpServerUrl = "";
+var phpServerUrl = ""; //"http://191.109.247.195:80/nowplayingsfo/";
 var phpScriptRelativePath = "php/twitterconnect.php";
 var theCompleteUrl = phpServerUrl + phpScriptRelativePath;
 
@@ -34,23 +35,70 @@ function createTwitterObjectsFromStringResponse(response) {
 }
 
 // Expand t.co link
-function expandTCoLink(tcoLink) {
-	
-	//http://expandurl.appspot.com/expand?url=http%3A%2F%2Ft.co%2FgLP0Ucg
-	//var baseUrl = "https://www.googleapis.com/urlshortener/v1/url?shortUrl=";
-	var baseUrl = "http://www.linkexpander.com/?url=";
-	//var baseUrl = "http://expandurl.appspot.com/expand?url=";
-	//var encodedTco = encodeURI(tcoLink);
-	var encodedTco = tcoLink;
-	var completeUrl = baseUrl + encodedTco;
+function expandTCoLink(theVideoIFrame, tcoLink, titleElement) {
+	var phpHelperUrl = "php/unshorten.php";
 	$.ajax({//Make the Ajax Request
 		type: "GET",
-		url: completeUrl,
+		url: phpHelperUrl,
 		crossDomain: true,
-		//data: "from_js_to_php",
-		//dataType: "json",
+		data: "shortUrl=" + tcoLink,	//"shortUrl=https://t.co/LAyHzDxy1J",
+		dataType: "text",
 		success: function(response){ 
-			console.log("Decoded");
+			setTheLongId(response, theVideoIFrame, titleElement);
+			return response;
 			}
+	});
+}
+
+/**
+* Synchronous handler for ajax request!
+*/
+function setTheLongId(response, theVideoIFrame, titleElement) {
+	try {
+		if (response == null || !response)
+			theVideoLinkLongId = "";
+		else {
+			var extract = response.match(/=(.*)&feature/).pop();
+			//console.log(response);
+			theVideoLinkLongId = extract;
+			theVideoIFrame.setAttribute("src", getYoutubeEmbededLink(theVideoLinkLongId));
+			//console.log(theVideoLinkLongId);
+			//console.log(getYoutubeEmbededLink(theVideoLinkLongId));
+			setVideoTitleSynch(titleElement, theVideoLinkLongId)
+		}
+	}
+	catch(err) {
+		// set default video
+		theVideoIFrame.setAttribute("src", getYoutubeEmbededLink("rrVDATvUitA"));
+		//setVideoTitleSynch(titleElement, "rrVDATvUitA")
+		titleElement.innerHTML = "Default video (resolve error)";
+		//console.log(err);
+	}
+}
+
+function setVideoSource(theVideoIFrame, tweetText, titleElement) {
+	var theVideoSource = getYoutubeShortLink(tweetText);
+	//var theVideoSourceId = getYoutubeShortLinkId(theVideoSource);
+	expandTCoLink(theVideoIFrame, theVideoSource, titleElement);
+	
+	//theVideoIFrame.setAttribute("src", getYoutubeEmbededLink(theVideoLinkLongId));
+}
+
+function setVideoTitleSynch(titleElement, idVideo) {
+	//console.log("idVideo: " + idVideo);
+	$.ajax({//Make the Ajax Request
+		type: "GET",
+		url: "php/youtubetitle.php",
+		crossDomain: true,
+		data: "theid=" + idVideo,	//"shortUrl=https://t.co/LAyHzDxy1J",
+		dataType: "text",
+		success: function(response){ 
+			//console.log("Vid Title: " + response);
+			titleElement.innerHTML = response;
+			return response;
+			},
+		error: function() {
+			titleElement.innerHTML = "Unreachable title";
+		}
 	});
 }

@@ -39,12 +39,12 @@ $_SESSION['oauth_token_secret'] = $access_token_secret;
 // Authorize
 $url = $connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token']));
 
+//$statuses = $connection->get("statuses/home_timeline", ["count" => 25, "exclude_replies" => true]);
+//$theSearchQ = "YouTube good OR amazing OR awesome filter:links";
+//$theSearchQ = "youtube.com good OR amazing OR awesome filter:links";
 $theSearchQ = "youtube.com filter:links";
-$theSearchQ = "youtube.com filter:links #nowplaying";
-//#nowplaying
 //$theSearchQ = rawurlencode('near:"Bogotá, D.C., Colombia" within:15mi');
 $tweets = $connection->get('search/tweets', ['q' => $theSearchQ]);
-
 //$tweets = $connection->get('search/tweets', ['q' => '\"https%3A%2F%2Fwww.youtube.com%2F\"&src=typd']);
 //$tweets = $connection->get('search/tweets', ['q' => 'luna%20llena&src=typd']);
 $encodedtweets = json_encode($tweets); 

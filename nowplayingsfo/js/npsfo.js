@@ -1,7 +1,9 @@
 // Div container for new posts
 var videoContainerDiv;
 var theResponseTwitterObjects;
-var maxResults = 5;
+var maxResults = 15;
+
+var theVideoLinkLongId;
 
 // a function called when a click event is registered on 
 // an element with the id of 'submit'
@@ -54,12 +56,13 @@ function createNewVideoFrame(videoId, tweeterObject) {
 	
 	var titleDiv = document.createElement("div");
 		// set column (7) class
-		titleDiv.className = "col-xs-12 h3strong";
-	var titleDivTex = document.createElement("h2");
-		titleDivTex.innerHTML = "Título video";
+		titleDiv.className = "col-xs-12 h3strong truncate";
+	var titleElement = document.createElement("h2");
+		titleElement.className = "truncate";
+		//setVideoTitleSynch(titleElement);
 		
 	// append
-	titleDiv.appendChild(titleDivTex);
+	titleDiv.appendChild(titleElement);
 	
 	// Create the video div
 	var videoDiv = document.createElement("div");
@@ -76,12 +79,7 @@ function createNewVideoFrame(videoId, tweeterObject) {
 	// Create iFrame
 	var videoIFrame = document.createElement("iframe");
 		// set link
-		var theVideoSource = getYoutubeShortLink(tweeterObject.tweetText);
-		var theVideoSourceId = getYoutubeShortLinkId(theVideoSource);
-		expandTCoLink(theVideoSource);
-		//videoIFrame.setAttribute("src", getYoutubeEmbededLink(videoId));
-		//videoIFrame.setAttribute("src", theVideoSource);
-		videoIFrame.setAttribute("src", getYoutubeEmbededLink(theVideoSourceId));
+		setVideoSource(videoIFrame, tweeterObject.tweetText, titleElement);
 		// set class
 		videoIFrame.className = "iframe-center";
 		
