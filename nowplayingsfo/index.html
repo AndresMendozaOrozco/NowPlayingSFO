@@ -48,9 +48,6 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-					<li>
-						<a href="#" id="submit">Reload</a>
-					</li>
 					<!--
 					<li>
                         <a href="#">About</a>
@@ -82,11 +79,17 @@
         </div>
         
 		<div class="row" id="postTwitt">
-			<form>
-				<div class="col-md-4" id="sharevideo" placeholder="http://youtube.com/">Video URL<input type="text" name="thevideourl"></div>
-				<div class="col-md-5" id="comment">Comment<input type="text" name="thecomment"></div>
-				<div class="col-md-3" ><input type="submit" value="Tweet to #nowplaying" disabled></div>
-			</form>
+				<div class="col-md-4 col-sm-6 col-xs-12" id="sharevideo" placeholder="http://youtube.com/">
+					Video URL<input type="text" name="thevideourl" id="thevideourlid">
+				</div>
+				<div class="col-md-5 col-sm-6 col-xs-12" id="comment">
+					Comment<input type="text" name="thecomment" id="thecommentid">
+				</div>
+				<div class="col-md-3 col-xs-12" >
+					<button type="button" class="btn btn-primary btn-sm" onclick="submitPost()">Tweet</button>
+					<!--<input type="submit" class="btn btn-info" value="Submit Button">-->
+				</div>
+			
         </div>
 	</div>
 	
@@ -152,6 +155,7 @@
     <script src="js/bootstrap.min.js"></script>
 	
 	<!-- Custom Javascript -->
+	<script src="js/myutilities.js"></script>
 	<script src="js/mytweeterconnect.js"></script>
     <script src="js/npsfo.js"></script>
 

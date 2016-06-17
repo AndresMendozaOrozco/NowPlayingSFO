@@ -5,100 +5,109 @@ var phpScriptRelativePath = "php/twitterconnect.php";
 var theCompleteUrl = phpServerUrl + phpScriptRelativePath;
 
 
+//var locationString = "-22.912214,-43.230182,1000km";
+var locationString;
 
+var searchRadius = 20000;
 
+/** 
+Get the Search results
+First gets user location; waits for the user to accept and then sends an ajaz request with the current location.
+*/
 function getSearchResults() {
+	//console.log("Getting search started");
+	//getLocation();
+	getLocation(function(res) { /* do something with the result */ });
+}
+
+// Once location is set; continue searching.
+/*
+function getSearchResultsSolvedLocation() {
+	sendQueryToPhpServerIterate();
+}
+*/
+// Get user location;
+function getLocation(callback) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function(position){
+                callback(position.coords.latitude + "," + position.coords.longitude + "," + searchRadius + "km" )
+				locationString = position.coords.latitude + "," + position.coords.longitude + "," + searchRadius + "km";
+				//locationString = "-22.912214,-43.230182,1000km";
+				//console.log(locationString);
+				sendQueryToPhpServer();
+            }
+        );
+    } else {
+		locationString = "-22.912214,-43.230182,1000km";
+		sendQueryToPhpServer();
+    }
+}
+
+// Sends an ajax request to search under current location!!!
+function sendQueryToPhpServer() {
 	$.ajax({//Make the Ajax Request
 		type: "GET",
 		url: theCompleteUrl,
 		crossDomain: true,
-		//data: "from_js_to_php",
+		data: "localizationString=" + locationString,
 		//dataType: "json",
 		success: function(response){ 
 			theResponseTwitterObjects = createTwitterObjectsFromStringResponse(response);
-			initApp();
+			//theResponseTwitterObjects = tmpTwitterObjects.slice(0);
+			//updateTwitterObjects(tmpTwitterObjects);
+			reloadSite();
+			}
+	});
+}
+
+function sendQueryToPhpServerIterate() {
+	$.ajax({//Make the Ajax Request
+		type: "GET",
+		url: theCompleteUrl,
+		crossDomain: true,
+		data: "localizationString=" + locationString,
+		//dataType: "json",
+		success: function(response){ 
+			var tmpTwitterObjects = createTwitterObjectsFromStringResponse(response);
+			//theResponseTwitterObjects = tmpTwitterObjects.slice(0);
+			updateTwitterObjects(tmpTwitterObjects);
+			//reloadSite();
 			}
 	});
 }
 
 var splitChar = "\nqq";
+// Map php's text response to a twitter object
 function createTwitterObjectsFromStringResponse(response) {
 	// each entry has 6 fields and an extera character
 	var theTwitterObjects = [];
 	var fields = response.split(splitChar);
 	//console.log("Lines: " + fields.length);
-	var numberOfObjects = fields.length/6;
+	var numberOfObjects = fields.length/6;	// 6 is the number of fields for eath Twitter Object
 	for (var n= 0; n<numberOfObjects; n++ ) {
 		theTwitterObjects[n] = new TweetObject(fields[(n*6)+0], fields[(n*6)+1], fields[(n*6)+2], fields[(n*6)+3], fields[(n*6)+4], fields[(n*6)+5]);
 	}
 	return theTwitterObjects;
 }
 
-// Expand t.co link
-function expandTCoLink(theVideoIFrame, tcoLink, titleElement) {
-	var phpHelperUrl = "php/unshorten.php";
+function submitPost(){
+	//videoInput
+	var theVideoToSubmit = $('#thevideourlid').val();
+	var theCommentToSubmit = $('#thecommentid').val();
+	//tweetInput
+	console.log(theVideoToSubmit + " - " + theCommentToSubmit);
+	
 	$.ajax({//Make the Ajax Request
 		type: "GET",
-		url: phpHelperUrl,
+		url: "php/postTweet.php",
 		crossDomain: true,
-		data: "shortUrl=" + tcoLink,	//"shortUrl=https://t.co/LAyHzDxy1J",
-		dataType: "text",
+		data: "thevideourl=" + theVideoToSubmit + "&thecomment=" + theCommentToSubmit,
+		//dataType: "json",
 		success: function(response){ 
-			setTheLongId(response, theVideoIFrame, titleElement);
-			return response;
+			console.log("Tweeted!");
 			}
 	});
-}
-
-/**
-* Synchronous handler for ajax request!
-*/
-function setTheLongId(response, theVideoIFrame, titleElement) {
-	try {
-		if (response == null || !response)
-			theVideoLinkLongId = "";
-		else {
-			var extract = response.match(/=(.*)&feature/).pop();
-			//console.log(response);
-			theVideoLinkLongId = extract;
-			theVideoIFrame.setAttribute("src", getYoutubeEmbededLink(theVideoLinkLongId));
-			//console.log(theVideoLinkLongId);
-			//console.log(getYoutubeEmbededLink(theVideoLinkLongId));
-			setVideoTitleSynch(titleElement, theVideoLinkLongId)
-		}
-	}
-	catch(err) {
-		// set default video
-		theVideoIFrame.setAttribute("src", getYoutubeEmbededLink("rrVDATvUitA"));
-		//setVideoTitleSynch(titleElement, "rrVDATvUitA")
-		titleElement.innerHTML = "Default video (resolve error)";
-		//console.log(err);
-	}
-}
-
-function setVideoSource(theVideoIFrame, tweetText, titleElement) {
-	var theVideoSource = getYoutubeShortLink(tweetText);
-	//var theVideoSourceId = getYoutubeShortLinkId(theVideoSource);
-	expandTCoLink(theVideoIFrame, theVideoSource, titleElement);
 	
-	//theVideoIFrame.setAttribute("src", getYoutubeEmbededLink(theVideoLinkLongId));
-}
-
-function setVideoTitleSynch(titleElement, idVideo) {
-	//console.log("idVideo: " + idVideo);
-	$.ajax({//Make the Ajax Request
-		type: "GET",
-		url: "php/youtubetitle.php",
-		crossDomain: true,
-		data: "theid=" + idVideo,	//"shortUrl=https://t.co/LAyHzDxy1J",
-		dataType: "text",
-		success: function(response){ 
-			//console.log("Vid Title: " + response);
-			titleElement.innerHTML = response;
-			return response;
-			},
-		error: function() {
-			titleElement.innerHTML = "Unreachable title";
-		}
-	});
+	
 }

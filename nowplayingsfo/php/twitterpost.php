@@ -45,18 +45,9 @@ $url = $connection->url('oauth/authorize', array('oauth_token' => $request_token
 $theSearchQ = "youtube.com filter:links";
 //$theSearchQ = rawurlencode('near:"Bogotá, D.C., Colombia" within:15mi');
 $tweets = $connection->get('search/tweets', ['q' => $theSearchQ]);
-//$tweets = $connection->get('search/tweets', ['q' => '\"https%3A%2F%2Fwww.youtube.com%2F\"&src=typd']);
-//$tweets = $connection->get('search/tweets', ['q' => 'luna%20llena&src=typd']);
+
 $encodedtweets = json_encode($tweets); 
 
-/*
-	this.theId = theId;
-	this.fullName = fullName;
-	this.avatar = avatar;
-	this.userName = userName;
-	this.tweetText = tweetText;
-	this.timeText = timeText;
-*/
 $splitChar = "\nqq";
 foreach ($tweets->statuses as $result) {
   echo 
