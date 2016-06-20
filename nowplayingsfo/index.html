@@ -8,6 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+	
+	<!-- Twitter options -->
+	<!--
+	<meta name="twitter:widgets:autoload" content="off">
+	<link rel="canonical" href="https://dev.twitter.com/">
+	<link rel="me" href="https://twitter.com/TwitterDev">
+	<a class="twitter-follow-button" rel="me" href="https://twitter.com/TwitterDev"> Follow @TwitterDev </a>
+	<script src="js/widgets.js"></script>
+	-->
 
     <title>#nowplaying in San Francisco</title>
 
@@ -19,6 +28,8 @@
 	
 	<!-- App CSS -->
 	<link href="css/npsfo.css" rel="stylesheet">
+	
+	
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,28 +46,12 @@
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">#nowplaying in San Francisco</a>
-            </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
 					<!--
 					<li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
+                        <a href="#">#NowPlaying</a>
                     </li>
 					-->
                 </ul>
@@ -71,70 +66,36 @@
 		<!-- Page Heading -->
         <div class="row">
             <div class="col-lg-8">
-                <h1 class="page-header">#nowplaying in San Francisco <br>
+                <h1 class="page-header">#NowPlaying in San Francisco <br>
                     <span style="font-size: 0.48em;">This page shows #nowplaying tweets in San Francisco that contain a youtube link. It also allows you to post a #nowplaying tweet with a YouTube link.</span>
                 </h1>	
 				
             </div>
         </div>
-        
-		<div class="row" id="postTwitt">
+        <div class="row" id="postTwitt">
 				<div class="col-md-4 col-sm-6 col-xs-12" id="sharevideo" placeholder="http://youtube.com/">
-					Video URL<input type="text" name="thevideourl" id="thevideourlid">
+					Video URL: <input type="url" name="thevideourl" id="thevideourlid">
 				</div>
 				<div class="col-md-5 col-sm-6 col-xs-12" id="comment">
-					Comment<input type="text" name="thecomment" id="thecommentid">
+					Comment: <input type="text" name="thecomment" id="thecommentid">
 				</div>
 				<div class="col-md-3 col-xs-12" >
-					<button type="button" class="btn btn-primary btn-sm" onclick="submitPost()">Tweet</button>
-					<!--<input type="submit" class="btn btn-info" value="Submit Button">-->
+					<button type="button" class="btn btn-primary btn-sm" onclick="submitPost()">Tweet #NowPlaying</button>
 				</div>
 			
         </div>
 	</div>
 	
-	<div id="videos_container" class="container">
+	<div id="container" class="container">
         
 		
 		
 	</div>
 	
+	
+	
 	<div id="pagination_container" class="container">
-
-        <!-- Pagination -->
-		<!--
-        <div class="row text-center">
-            <div class="col-lg-12">
-                <ul class="pagination">
-                    <li>
-                        <a href="#">&laquo;</a>
-                    </li>
-                    <li class="active">
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">5</a>
-                    </li>
-                    <li>
-                        <a href="#">&raquo;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-		-->
-        <!-- /.row -->
-
         <hr>
-
         <!-- Footer -->
         <footer>
             <div class="row">
@@ -156,9 +117,8 @@
 	
 	<!-- Custom Javascript -->
 	<script src="js/myutilities.js"></script>
-	<script src="js/mytweeterconnect.js"></script>
-    <script src="js/npsfo.js"></script>
-
+	<script src="js/testembedpost.js"></script>
+	
 </body>
 
 </html>
