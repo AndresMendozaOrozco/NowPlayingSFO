@@ -42,7 +42,7 @@ function getEmbededQuery($statusId) {
 // Coordinates
 $localizationFilter = $_GET["localizationString"];
 // Results limit
-$countMax = $_GET["numresults"];
+$countMax = 1;
 
 // The query!
 $query = array(
@@ -56,13 +56,10 @@ $query = array(
 // Get statuses by query
 $results = search($query);
 
-$formatedresults = array();
-
-$splitChar = "\nqq";
 // Send as Ajax response: the embeded tweet and the tweet object
 foreach ($results->statuses as $result) {
 	$tmpEmbededTweet = (array)(getEmbededTweet($result->id));
 	$tmpEmbededTweet["theresobjec"] = $result;
-	echo json_encode($tmpEmbededTweet) . $splitChar;
+	echo json_encode($tmpEmbededTweet);
 }
 ?>

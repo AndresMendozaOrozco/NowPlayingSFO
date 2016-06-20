@@ -8,8 +8,6 @@ var currentTweets = [];
 var locationString;
 var searchRadius = 2000;
 
-var firstQueryNumber = 5;
-
 /** 
 * Kickoff function!
 * Assure document is loaded
@@ -20,19 +18,19 @@ $( document ).ready(function() {
 	// Ask for new posts at a defined rate!
 	window.setInterval(function(){
 		console.log("Searching new posts!");
-		sendQueryToPhpServer(1);
+		sendQueryToPhpServer();
 	}, refreshRate);
 });
 
 /** 
 * Sends an ajax request to search under current location!!!
 */
-function sendQueryToPhpServer(numberOfResults) {
+function sendQueryToPhpServer() {
 	$.ajax({//Make the Ajax Request
 		type: "GET",
 		url: "php/twitterconnect.php",
 		crossDomain: true,
-		data: "localizationString=" + locationString + "&numresults=" + numberOfResults,
+		data: "localizationString=" + locationString,
 		//dataType: "json",
 		success: function(response){ 
 			//console.log(response);
@@ -45,7 +43,6 @@ function sendQueryToPhpServer(numberOfResults) {
 	});
 }
 
-var splitChar = "\nqq";
 /** 
 * A new embeded post is received; 
 * If it's different than the last one, add it.
@@ -53,30 +50,25 @@ var splitChar = "\nqq";
 */
 function manageEmbededTweet(result) {
 	try {
-		newTweets = result.split(splitChar);
-		//console.log(newTweets);
-		newTweet = JSON.parse(newTweets[0]);
+		//newTweet = null;
+		//console.log(result);
+		newTweet = JSON.parse(result);
 		var newStatusId = newTweet.theresobjec.id;
 		console.log(newStatusId);
 		// Validate if it exists
 		// initial case
 		if (currentTweets.length==0) {
-			console.log("FIRST TIME!!!! -> " + newTweets.length);
-			for (i=0; i<newTweets.length; i++) {
-				newTweet = JSON.parse(newTweets[i]);
-				// Validate if it has a youtube link; filter not necessary working
-				if( newTweet.theresobjec.entities.urls.length>0 ) {	
-					if( (validateYoutubeUrl(newTweet.theresobjec.entities.urls[0].expanded_url)) ) {		
-						addTweet(newTweet);
-						currentTweets.push(newTweet);
-					}
+			// Validate if it has a youtube link; filter not necessary working
+			if( newTweet.theresobjec.entities.urls.length>0 ) {	
+				if( (validateYoutubeUrl(newTweet.theresobjec.entities.urls[0].expanded_url)) ) {		
+					addTweet(newTweet);
+					currentTweets.push(newTweet);
 				}
 			}
 		}
 		// general case
 		else {
-			console.log("Generic case!!!!");
-			newTweet = JSON.parse(newTweets[0]);
+			
 			var currUrl = currentTweets[currentTweets.length-1].url;
 			var currId = currentTweets[currentTweets.length-1].theresobjec.id;
 			if (newStatusId != currId) {
@@ -224,13 +216,13 @@ function getLocation(callback) {
                 callback(position.coords.latitude + "," + position.coords.longitude + "," + searchRadius + "km" )
 				locationString = position.coords.latitude + "," + position.coords.longitude + "," + searchRadius + "km";
 				console.log("Current location: " + locationString);
-				sendQueryToPhpServer(firstQueryNumber);
+				sendQueryToPhpServer();
             }
         );
     } else {
 		// Send default location: San Francisco. CA!
 		locationString = "37.773972,-122.431297,1000km";
-		sendQueryToPhpServer(firstQueryNumber);
+		sendQueryToPhpServer();
     }
 }
 
