@@ -49,7 +49,7 @@ $query = array(
   "q" => "'youtube' '#nowplaying' filter:links",
   //"q" => "'youtube' '#nowplaying'",
   "count" => $countMax,
-  //"geocode" => $localizationFilter,
+  "geocode" => $localizationFilter,
   "result_type" => "recent",
 );
 
