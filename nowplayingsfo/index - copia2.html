@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	
+	<!-- Twitter options -->
+	<!--
+	<meta name="twitter:widgets:autoload" content="off">
+	<link rel="canonical" href="https://dev.twitter.com/">
+	<link rel="me" href="https://twitter.com/TwitterDev">
+	<a class="twitter-follow-button" rel="me" href="https://twitter.com/TwitterDev"> Follow @TwitterDev </a>
+	<script src="js/widgets.js"></script>
+	-->
+
+    <title>#nowplaying in San Francisco</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom CSS -->
+    <link href="css/1-col-portfolio.css" rel="stylesheet">
+	
+	<!-- App CSS -->
+	<link href="css/npsfo.css" rel="stylesheet">
+	
+	
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<!--<body onload="initApp()">-->
+<body>
+
+    
+
+    <!-- Page Content -->
+    <div id="" class="container">
+		<!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-8 header-column" style="">
+                <h1 class="page-header"><strong>#nowplaying in San Francisco</strong><br></h1>	
+				
+				<p class="subtitle">
+					This page shows #nowplaying tweets in San Francisco that contain a youtube link. It also allows you to post a #nowplaying tweet with a YouTube link.
+				</p>
+				
+            </div>
+        </div>
+        <div class="row" id="postTwitt">
+				<div class="col-md-4 col-sm-6 col-xs-12" id="sharevideo" placeholder="http://youtube.com/">
+					<span class="truncate2">Video URL: <input type="url" name="thevideourl" id="thevideourlid"></span>
+				</div>
+				<div class="col-md-5 col-sm-6 col-xs-12" id="comment">
+					<span class="truncate2">Comment: <input type="text" name="thecomment" id="thecommentid"></span>
+				</div>
+				<div class="col-md-3 col-sm-12" >
+					<span class="truncate2"><button type="button" class="btn btn-primary btn-sm" onclick="submitPost()">Tweet #NowPlaying</button></span>
+				</div>
+			
+        </div>
+	</div>
+	
+	<div id="container" class="container">
+		<!-- Initial demo video -->
+		<!--
+        <div class="row borderrow" id="testRow">
+			<div class="col-xs-12 h3strong truncate">
+				<h3 class = "truncate">
+					Imagine Dragons – Night Visions (Official Video)
+				</h3>
+			</div>
+
+			<div class="col-md-7 col-xs-12">
+				<a href="">
+					<div class="vid-responsive">
+						<iframe class="iframe-center"
+							src="http://www.youtube.com/embed/XGSy3_Czz8k">
+						</iframe>
+					</div>
+				</a>
+			</div>
+
+			<div class="col-md-5 col-xs-12 tweetembed">
+				<div class="col-xs-8">
+					<img src="https://pbs.twimg.com/profile_images/608672074064756736/_qjNMtIa_bigger.jpg" class="tweetimg">
+					<p class="avatar_p">John Doe</p>
+					<p class="username_p">@johndoe</p>
+				</div>
+				<div class="col-xs-4">
+					<img src="resources/img/tweet.png" class="tweetlogo">
+				</div>
+				<p class="col-xs-12 tweet_text_p">
+					I love this song and band so much! <a href="http://youtu.be/DfgkAJmp9-A">http://youtu.be/DfgkAJmp9-A</a> Can't wait to see them live. Listen! #nowplaying
+				</p>
+				<p class="col-xs-12 time_text_p">
+					4:20 pm – Apr 28
+				</p>
+			</div>
+		</div>
+		
+		<div class="row borderrow" id="testRow">
+			<div class="col-xs-12 h3strong truncate">
+				<h3 class = "truncate">
+					Imagine Dragons – Night Visions (Official Video)
+				</h3>
+			</div>
+
+			<div class="nosidepadding col-md-7 col-xs-12">
+				<a href="">
+					<div class="vid-responsive">
+						<iframe class="iframe-center"
+							src="http://www.youtube.com/embed/XGSy3_Czz8k">
+						</iframe>
+					</div>
+				</a>
+			</div>
+
+			<div class="col-md-5 col-xs-12 tweetembed nosidepadding">
+				<div class="col-xs-8">
+					<img src="https://pbs.twimg.com/profile_images/608672074064756736/_qjNMtIa_bigger.jpg" class="tweetimg">
+					<p class="avatar_p">John Doe</p>
+					<p class="username_p">@johndoe</p>
+				</div>
+				<div class="col-xs-4">
+					<img src="resources/img/tweet.png" class="tweetlogo">
+				</div>
+				<p class="col-xs-12 tweet_text_p">
+					I love this song and band so much! <a href="http://youtu.be/DfgkAJmp9-A">http://youtu.be/DfgkAJmp9-A</a> Can't wait to see them live. Listen! #nowplaying
+				</p>
+				<p class="col-xs-12 time_text_p">
+					4:20 pm – Apr 28
+				</p>
+			</div>
+		</div>
+		-->
+		
+	</div>
+	
+	
+	
+	<div id="pagination_container" class="container">
+        <hr>
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Andrés Mendoza for Bunny Inc.</p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+	
+	<!-- Custom Javascript -->
+	<script src="js/myutilities.js"></script>
+	<script src="js/testembedpost.js"></script>
+	
+</body>
+
+</html>
