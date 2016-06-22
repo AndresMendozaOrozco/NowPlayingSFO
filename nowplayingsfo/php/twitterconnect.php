@@ -21,11 +21,11 @@ function search(array $query) {
 
 // Get embeded tweet from status id
 function getEmbededTweet($statusId) {
-	$toa = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
+	$toa2 = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
 	//return $toa->get('statuses/oembed', array ( "url" => "https://twitter.com/Interior/status/" . $statusId , "hide_media" => "false") );
 	//$theQuery = getEmbededQuery($statusId);
 	//return $toa->get('statuses/oembed', $theQuery );
-	return $toa->get('statuses/oembed', getEmbededQuery($statusId) );
+	return $toa2->get('statuses/oembed', getEmbededQuery($statusId) );
 	//return $toa->get('statuses/oembed', array ( "url" => "https://twitter.com/Interior/status/" . $statusId) );
 }
 
@@ -40,7 +40,7 @@ function getEmbededQuery($statusId) {
 }
  
 // Coordinates
-$localizationFilter = $_GET["localizationString"];
+//$localizationFilter = $_GET["localizationString"];
 // Results limit
 $countMax = 1;
 
@@ -49,7 +49,7 @@ $query = array(
   "q" => "'youtube' '#nowplaying' filter:links",
   //"q" => "'youtube' '#nowplaying'",
   "count" => $countMax,
-  "geocode" => $localizationFilter,
+  //"geocode" => $localizationFilter,
   "result_type" => "recent",
 );
 
@@ -57,9 +57,41 @@ $query = array(
 $results = search($query);
 
 // Send as Ajax response: the embeded tweet and the tweet object
+// Get the embeded tweet from status id
+//print_r($results->statuses[0]->id);
+$tmpEmbededTweet = getEmbededTweet($results->statuses[0]->id);
+
+//$results->statuses[0]->theEmbeddedHTML = $tmpEmbededTweet->html;
+$tmpEmbededTweet->result = $results->statuses[0];
+
+//$tmpEmbededTweet->theresobjec = $results->statuses[0];
+//print_r(json_encode($results->statuses[0]));
+$theStatus = json_encode($tmpEmbededTweet);
+
+
+echo $theStatus;
+
+/*
 foreach ($results->statuses as $result) {
-	$tmpEmbededTweet = (array)(getEmbededTweet($result->id));
-	$tmpEmbededTweet["theresobjec"] = $result;
+	print_r("Status" . "\n");
+	print_r($result->id . "\n");
+	print_r("Encodded Status:" . "\n");
+	print_r(json_encode($result));
+	// Get the embeded tweet from status id
+	$tmpEmbededTweet = getEmbededTweet($result->id);
+	print_r("Encodded Embedded tweet html:" . "\n");
+	print_r($tmpEmbededTweet->html . "\n");
+	print_r("Encoded Embedded tweet:" . "\n");
+	print_r(json_encode($tmpEmbededTweet) . "\n");
+	
+	
+	$tmpEmbededTweet->theresobjec = $result;
+	
+	print_r(json_encode($tmpEmbededTweet) . "\n");
+	
+	//$tmpEmbededTweet = json_decode($tmpEmbededTweet);
 	echo json_encode($tmpEmbededTweet);
+	//$tmpEmbededTweet;
 }
+*/
 ?>

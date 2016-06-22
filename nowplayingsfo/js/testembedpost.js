@@ -33,10 +33,12 @@ function sendQueryToPhpServer() {
 		data: "localizationString=" + locationString,
 		//dataType: "json",
 		success: function(response){ 
+			//console.log("JSON GOT!");
 			//console.log(response);
 			manageEmbededTweet(response);
 		},
 		error: function(response){ 
+			//console.log("ERROR!");
 			console.log(response);
 		}
 		
@@ -53,14 +55,14 @@ function manageEmbededTweet(result) {
 		//newTweet = null;
 		//console.log(result);
 		newTweet = JSON.parse(result);
-		var newStatusId = newTweet.theresobjec.id;
-		console.log(newStatusId);
+		var newStatusId = newTweet.result.id;
+		console.log("Latest tweet id: " + newStatusId);
 		// Validate if it exists
 		// initial case
 		if (currentTweets.length==0) {
 			// Validate if it has a youtube link; filter not necessary working
-			if( newTweet.theresobjec.entities.urls.length>0 ) {	
-				if( (validateYoutubeUrl(newTweet.theresobjec.entities.urls[0].expanded_url)) ) {		
+			if( newTweet.result.entities.urls.length>0 ) {	
+				if( (validateYoutubeUrl(newTweet.result.entities.urls[0].expanded_url)) ) {		
 					addTweet(newTweet);
 					currentTweets.push(newTweet);
 				}
@@ -70,11 +72,11 @@ function manageEmbededTweet(result) {
 		else {
 			
 			var currUrl = currentTweets[currentTweets.length-1].url;
-			var currId = currentTweets[currentTweets.length-1].theresobjec.id;
+			var currId = currentTweets[currentTweets.length-1].result.id;
 			if (newStatusId != currId) {
 				// Validate if it has a youtube link; filter not necessary working
-				if( newTweet.theresobjec.entities.urls.length>0 ) {	
-					if( (validateYoutubeUrl(newTweet.theresobjec.entities.urls[0].expanded_url)) ) {
+				if( newTweet.entities.urls.length>0 ) {	
+					if( (validateYoutubeUrl(newTweet.result.entities.urls[0].expanded_url)) ) {
 						// add it
 						addTweet(newTweet);
 						// update Tweet Array
@@ -101,15 +103,15 @@ function addTweet(item){
 		// Set row class
 		childNode.className = "row borderrow";
 		// Set id; used later if we want to remove
-		childNode.setAttribute("id", item.theresobjec.id);
+		childNode.setAttribute("id", item.result.id);
 	
 	var titleDiv = document.createElement("div");
 		// set column (7) class
 		titleDiv.className = "col-xs-12 h3strong truncate";
 	var titleDivContent = document.createElement("h3");
 		titleDivContent.className = "truncate";
-		titleDivContent.setAttribute("id", "h3" + item.theresobjec.id);
-		var theVideoUrl = item.theresobjec.entities.urls[0].expanded_url;
+		titleDivContent.setAttribute("id", "h3" + item.result.id);
+		var theVideoUrl = item.result.entities.urls[0].expanded_url;
 		var theVideoId = getYoutubeId(theVideoUrl);
 		setTheVideoTitleSynch(titleDivContent, theVideoId);
 	// append
@@ -122,7 +124,7 @@ function addTweet(item){
 	// Create the anchor element
 	var theAnchor = document.createElement("a");
 		// Set href
-		theAnchor.href = item.theresobjec.url ;
+		theAnchor.href = item.url ;
 	// Create video class div
 	var videoClassDiv = document.createElement("div");
 		// set class
@@ -146,16 +148,16 @@ function addTweet(item){
 		tweeterDiv.className = "col-md-5 col-xs-12 tweetembed";
 	
 	var avatar = document.createElement("img");
-	avatar.src = item.theresobjec.user.profile_image_url;
+	avatar.src = item.result.user.profile_image_url;
 	avatar.className = "tweetimg";
 	
 	var fullNameText = document.createElement("p");
 	fullNameText.className = "avatar_p";
-	fullNameText.innerHTML = item.theresobjec.user.name;
+	fullNameText.innerHTML = item.result.user.name;
 	
 	var userNameText = document.createElement("p");
 	userNameText.className = "username_p";
-	userNameText.innerHTML = "@" + item.theresobjec.user.screen_name;
+	userNameText.innerHTML = "@" + item.result.user.screen_name;
 	
 	var namesAndAvatarDiv = document.createElement("div");
 	namesAndAvatarDiv.className = "col-xs-8";
@@ -170,7 +172,7 @@ function addTweet(item){
 	
 	var creationTime = document.createElement("p");
 	creationTime.className = "col-xs-12 time_text_p";
-	creationTime.innerHTML = item.theresobjec.created_at;
+	creationTime.innerHTML = item.result.created_at;
 	
 	var tweetlogo = document.createElement("img");
 	tweetlogo.src ="resources/img/tweet.png";
