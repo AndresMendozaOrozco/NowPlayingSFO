@@ -15,8 +15,8 @@ The #NowPlaying page is a simple one-page app where visitors can visualize the m
 NowPlayingSFO uses a number of open source projects to work properly:
 
 * [TWITTEROAUTH] - anages authentication to Twitter API and subsequent requests; its referenced by the Twitter development team!
-* [TWITTERJSCLIENT] - [Optional]
 * [Twitter Bootstrap] - great UI boilerplate for modern web apps
+* [Composer] - dependencies
 * [node.js] - evented I/O for the backend
 * [jQuery] - Simplifies javascript
 
@@ -27,7 +27,7 @@ And of course NowPlayingSFO itself is open source with a [https://github.com/And
 
 NowPlayingSFO requires [Node.js](https://nodejs.org/) v4+ to run.
 
-You need Gulp installed globally:
+You need TWITTEROAUTH installed globally:
 
 ```sh
 $ composer require abraham/twitteroauth
