@@ -243,6 +243,7 @@ function submitPost(){
 		data: "thevideourl=" + theVideoToSubmit + "&thecomment=" + theCommentToSubmit,
 		//dataType: "json",
 		success: function(response){ 
+			alert("Tweeted!");
 			console.log("Tweeted!");
 			}
 	});
