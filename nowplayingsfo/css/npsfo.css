@@ -1,6 +1,6 @@
 body{
-	margin-left: 5em;
-	margin-right: 5em;
+	margin-left: 2%;
+	margin-right: 2%;
 	background-color: #fcfcfc;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1.6em;
@@ -65,8 +65,12 @@ h1, h2, h3, h4, p {
   margin-top: 2em;
 }
 .page-header{
+	padding-left: 5%;
+	padding-right: 5%;
+	/*
 	margin-left: 1em;
 	margin-right: 1em;
+	*/
 	padding-top: -50px
 }
 #postTwitt {
@@ -176,4 +180,10 @@ blockquote.twitter-tweet a:focus {
 	padding-right: 0px;
 	margin-left: 0px;
 	margin-right: 0px;
+}
+.breatheInputs {
+	margin: 1% 0% 1% 0%;
+}
+.copyrightst{
+	margin-left: 4%; margin-right: 4%; padding-left: 5%; padding-right: 5%;
 }
