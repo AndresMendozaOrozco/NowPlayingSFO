@@ -79,7 +79,7 @@ e.g. For WAMPServer, generally is located in:
 C:\wamp64\www\
 ```
 
-Copy the #NowPlayingSanFrancisco application folder to the WAMPServer Applications deployments.
+Copy the #NowPlayingSanFrancisco application folder to the WAMPServer Applications deployments:
 ```sh
 C:\wamp64\www\nowplayingsfoapp1
 ```
