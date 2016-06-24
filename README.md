@@ -60,18 +60,18 @@ php -r "unlink('composer-setup.php');"
 ```
 
 TwitterOAuth: https://twitteroauth.com/
+Go to tht php folder inside the application and tun:
 ```sh
 $ composer require abraham/twitteroauth
 ```
 
-Note: this installations are not required with the windows bundled application delivered; TwitterOAuth is embedded in the #NowPlayingSanFrancisco application folder. Here is just a reference for deployments under othe OS.
+Note: this installations are not required with the windows bundled application delivered; TwitterOAuth is embedded in the #NowPlayingSanFrancisco application folder. This is just a reference for deployments under other OS.
 
 ### Installation
 
 NowPlayingSFO requires a web application server with php includded; for the Apache Server and the php interpreter, I recommend installing the XAMPP or WAMPServer stack (Windows or Linux): 
-	- https://www.apachefriends.org/download.html
-	or
-	- http://www.wampserver.com/en/.
+- https://www.apachefriends.org/download.html
+- http://www.wampserver.com/en/.
 
 The Application is deployed under the werver; find the application folder of your installation.
 e.g. For WAMPServer, generally is located in: "C:\wamp64\www\"
