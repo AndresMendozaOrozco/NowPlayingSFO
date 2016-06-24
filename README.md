@@ -73,10 +73,16 @@ NowPlayingSFO requires a web application server with php includded; for the Apac
 - https://www.apachefriends.org/download.html
 - http://www.wampserver.com/en/.
 
-The Application is deployed under the werver; find the application folder of your installation.
-e.g. For WAMPServer, generally is located in: "C:\wamp64\www\"
+The Application should be deployed under the server, i.e. find the application folder of your installation.
+e.g. For WAMPServer, generally is located in: 
+```sh
+C:\wamp64\www\
+```
 
 Copy the #NowPlayingSanFrancisco application folder to the WAMPServer Applications deployments.
+```sh
+C:\wamp64\www\nowplayingsfoapp1
+```
 
 Start the Application server and use your browser to access; e.g. http://localhost/nowplayingsfoapp1
 
